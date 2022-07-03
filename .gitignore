@@ -3,3 +3,4 @@
 /chz-study-api/.env
 /uploads/*
 /chz-study-api/.vscode
+/chz-study-api/yarn.lock
