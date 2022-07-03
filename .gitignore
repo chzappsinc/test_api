@@ -1,0 +1,4 @@
+/.vscode
+/chz-study-api/node_modules
+/chz-study-api/.env
+/uploads/*
