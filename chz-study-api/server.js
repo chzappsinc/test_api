@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const UploadRouter = require("./router/upload");
 const UserRoute = require("./router/users");
+const CronJobRouter = require("./cronjobs/cronjob");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(__dirname + "/html"));
 // Routes
 app.use("/user", UserRoute);
 app.use("/upload", UploadRouter);
+app.use("/cron-jobs", CronJobRouter);
 
 // Handle error on empty path
 app.get("*", (req, res) => {

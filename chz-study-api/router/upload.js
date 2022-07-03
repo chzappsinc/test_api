@@ -12,15 +12,15 @@ const UploadRouter = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    const path = crypto.randomBytes(10).toString("hex");
-    fs.mkdirSync(`./../uploads/temp/${path}`);
-    let dir = `./../uploads/temp/${path}/`;
+    // const path = crypto.randomBytes(10).toString("hex");
+    // fs.mkdirSync(`./../uploads/temp/`);
+    let dir = `./../uploads/temp/`;
     callback(null, dir);
   },
   filename: (req, file, callback) => {
     const ext = path.extname(file.originalname);
     // console.log(file.mimetype);
-    callback(null, file.originalname.replace(/ /g, "-"));
+    callback(null, crypto.randomBytes(10).toString("hex") + ext);
   },
 });
 
