@@ -4,7 +4,8 @@ var moment = require("moment");
 
 const CronJobRouter = express.Router();
 
-CronJobRouter.all("/delete-files", (req, res) => {
+CronJobRouter.all("/delete-files", async (req, res) => {
+  let deleted = 0;
   fs.readdir("./../uploads/temp/", (err, files) => {
     files.forEach((file) => {
       fs.stat("./../uploads/temp/" + file, (err, stats) => {
@@ -12,12 +13,15 @@ CronJobRouter.all("/delete-files", (req, res) => {
           throw err;
         }
         const time = moment(stats.mtime.toISOString()).add(30, "minutes");
-        if (moment().isAfter(time)) fs.unlinkSync("./../uploads/temp/" + file);
+        if (moment().isAfter(time)) {
+          fs.unlinkSync("./../uploads/temp/" + file);
+          deleted = deleted + 1;
+        }
       });
     });
   });
   res.status(200).json({
-    message: "Module Runner",
+    message: "Task run; we are not guarantee in deleting files",
   });
 });
 
