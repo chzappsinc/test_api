@@ -1,6 +1,7 @@
 var express = require("express");
 var fs = require("fs");
 var moment = require("moment");
+const setFileServer = require("../config/functions");
 
 const CronJobRouter = express.Router();
 
@@ -16,12 +17,18 @@ CronJobRouter.all("/delete-files", async (req, res) => {
         if (moment().isAfter(time)) {
           fs.unlinkSync("./../uploads/temp/" + file);
           deleted = deleted + 1;
+          setFileServer(
+            "./../values/delete.txt",
+            /^#LAST_DELETE.*$/gm,
+            `#LAST_DELETED=${deleted}`
+          );
         }
       });
     });
   });
   res.status(200).json({
     message: "Task run; we are not guarantee in deleting files",
+    deleted: deleted,
   });
 });
 
