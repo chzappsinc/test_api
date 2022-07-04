@@ -1,7 +1,7 @@
 var express = require("express");
 var fs = require("fs");
 var moment = require("moment");
-const setFileServer = require("../config/functions");
+const { setFileServer } = require("../config/functions");
 
 const CronJobRouter = express.Router();
 
@@ -14,6 +14,11 @@ CronJobRouter.all("/delete-files", async (req, res) => {
           throw err;
         }
         const time = moment(stats.mtime.toISOString()).add(30, "minutes");
+        setFileServer(
+          "./../values/delete.txt",
+          /^#LAST_UPDATED.*$/gm,
+          `#LAST_UPDATED=${moment().toISOString()}`
+        );
         if (moment().isAfter(time)) {
           fs.unlinkSync("./../uploads/temp/" + file);
           deleted = deleted + 1;

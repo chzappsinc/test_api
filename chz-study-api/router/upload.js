@@ -6,7 +6,7 @@ var urls = require("../config/uri");
 var path = require("path");
 var moment = require("moment");
 var fs = require("fs");
-var formatBytes = require("../config/functions");
+var extraFunction = require("../config/functions");
 
 const UploadRouter = express.Router();
 
@@ -47,7 +47,7 @@ UploadRouter.post("/file", (req, res) => {
           fileName: req.file.filename,
           memeType: req.file.mimetype,
           original_name: req.file.originalname,
-          size: formatBytes(req.file.size),
+          size: extraFunction.formatBytes(req.file.size),
         });
       } else {
         res.status(500).json({
