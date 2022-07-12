@@ -2,6 +2,7 @@ var express = require("express");
 var connection = require("./config/connect");
 var cors = require("cors");
 var path = require("path");
+var fs = require("fs");
 require("dotenv").config();
 
 const UploadRouter = require("./router/upload");
@@ -37,6 +38,26 @@ connection.connect((err) => {
 app.listen(8120, (err) => {
   if (err) throw err;
 });
+
+// fs.readFile(
+//   "./../values/delete.txt",
+//   "utf8",
+//   function readFileCallback(err, data) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       const req = data.split("\n");
+//       const updated = req.map((i) => {
+//         let f = i.split("=");
+//         return {
+//           key: f[0],
+//           value: f[1].replace("\r", ""),
+//         };
+//       });
+//       console.log(updated[5].key);
+//     }
+//   }
+// );
 
 /**
  * Written by Chzapps india
